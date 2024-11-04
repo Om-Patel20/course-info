@@ -6,8 +6,10 @@ import com.pluralsight.courseinfo.repository.CourseRepository;
 import java.util.List;
 
 public class CourseStorageService {
-    private static final String PS_BASE_URL = "http://localhost:8000/pluralsight";
+    private static final String PS_BASE_URL = "http://127.0.0.1:8000/pluralsight";
+
     private final CourseRepository courseRepository;
+
     public CourseStorageService(CourseRepository courseRepository) {
         this.courseRepository = courseRepository;
     }

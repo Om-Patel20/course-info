@@ -12,12 +12,15 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class CourseRetrievalService {
-    private static final String PS_URI = "http://localhost:8000/pluralsight/profile/data/author/%s/all-content";
+    private static final String PS_URI = "http://127.0.0.1:8000/pluralsight/profile/data/author/%s/all-content";
+
     private static final HttpClient CLIENT = HttpClient
             .newBuilder()
             .followRedirects(HttpClient.Redirect.ALWAYS)
             .build();
+
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+
     public List<PluralsightCourse> getCoursesFor(String authorId) {
         HttpRequest request = HttpRequest
                 .newBuilder(URI.create(PS_URI.formatted(authorId)))
@@ -35,6 +38,7 @@ public class CourseRetrievalService {
         }
 
     }
+
     private static List<PluralsightCourse> toPluralsightCourses(HttpResponse<String> response) throws JsonProcessingException {
         JavaType returnType = OBJECT_MAPPER.getTypeFactory()
                         .constructCollectionType(List.class, PluralsightCourse.class);

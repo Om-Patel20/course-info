@@ -40,6 +40,7 @@ public class CourseRetriever {
                                 .filter(not(PluralsightCourse::isRetired)) // Filters out retired courses from the returned JSON list
                                 .filter(course -> course.duration() != null) // There were some courses where duration=null
                                 .toList();
+
         LOG.info("Retrieved the following {} courses {}", coursesToStore.size(), coursesToStore);
         courseStorageService.storePluralsightCourses(coursesToStore);
         LOG.info("Courses successfully stored");

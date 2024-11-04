@@ -10,7 +10,7 @@ import java.net.URI;
 
 public class CourseServer {
     private static final Logger LOG = LoggerFactory.getLogger(CourseResource.class);
-    private static final String BASE_URI = "http://localhost:8080/"; 
+    private static final String BASE_URI = "http://127.0.0.1:8080/";
 
     public static void main(String... args) {
         LOG.info("Starting HTTP server");

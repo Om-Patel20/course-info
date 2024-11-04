@@ -19,7 +19,7 @@ class CourseStorageServiceTest {
         PluralsightCourse ps1 = new PluralsightCourse("1", "Title 1", "01:40:00", "/url-1", false);
         courseStorageService.storePluralsightCourses(List.of(ps1));
 
-        Course expected = new Course("1", "Title 1", 100, "http://localhost:8000/pluralsight/url-1");
+        Course expected = new Course("1", "Title 1", 100, "http://127.0.0.1:8000/pluralsight/url-1");
         assertEquals(List.of(expected), repository.getAllCourses());
     }
     

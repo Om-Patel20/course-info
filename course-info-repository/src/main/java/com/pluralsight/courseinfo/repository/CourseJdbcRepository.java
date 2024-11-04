@@ -10,11 +10,13 @@ import java.util.Collections;
 import java.util.List;
 
 class CourseJdbcRepository implements CourseRepository{
-    private static final String H2_DATABASE_URL = "jdbc:h2:file:%s;AUTO_SERVER=TRUE;INIT=RUNSCRIPT FROM '/Users/opatel/Library/CloudStorage/OneDrive-AmericanExpress/Desktop/Example_Projects/course-info/db_init.sql'";
+    private static final String H2_DATABASE_URL = "jdbc:h2:file:%s;AUTO_SERVER=TRUE;INIT=RUNSCRIPT FROM '/Users/ompatel/Downloads/Course-Info-main/course-info/db_init.sql'";
+
     private static final String INSERT_COURSE = """
             MERGE INTO Courses (id, name, length, url)
             VALUES (?, ?, ?, ?)
         """;
+
     private final DataSource dataSource;
 
     public CourseJdbcRepository(String dataBaseFile) {
