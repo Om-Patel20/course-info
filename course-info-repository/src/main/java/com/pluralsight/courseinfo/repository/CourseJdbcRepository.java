@@ -8,6 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 class CourseJdbcRepository implements CourseRepository{
     private static final String H2_DATABASE_URL = "jdbc:h2:file:%s;AUTO_SERVER=TRUE;INIT=RUNSCRIPT FROM '/Users/ompatel/Downloads/Course-Info-main/course-info/db_init.sql'";
@@ -15,6 +16,11 @@ class CourseJdbcRepository implements CourseRepository{
     private static final String INSERT_COURSE = """
             MERGE INTO Courses (id, name, length, url)
             VALUES (?, ?, ?, ?)
+        """;
+
+    private static final String ADD_NOTES = """
+            UPDATE Courses SET notes = ?
+            WHERE id = ?
         """;
 
     private final DataSource dataSource;
@@ -53,12 +59,26 @@ class CourseJdbcRepository implements CourseRepository{
                 Course course = new Course(resultSet.getString(1),
                         resultSet.getString(2),
                         resultSet.getLong(3),
-                        resultSet.getString(4));
+                        resultSet.getString(4),
+                        Optional.ofNullable(resultSet.getString(5)));
                 courses.add(course);
             }
-            return Collections.unmodifiableList(courses);
+            return Collections.unmodifiableList(courses); // Collection cannot be modified by the caller.
         } catch (SQLException e) {
             throw new RepositoryException("Failed to retrieve courses", e);
+        }
+    }
+
+    @Override
+    public void addNotes(String id, String notes) {
+        // Similar to saveCourse
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(ADD_NOTES);
+            statement.setString(1, notes);
+            statement.setString(2, id);
+            statement.execute();
+        } catch (SQLException e) {
+            throw new RepositoryException("Failed to save " + id, e); // This is to protect against SQL Injections
         }
     }
 }

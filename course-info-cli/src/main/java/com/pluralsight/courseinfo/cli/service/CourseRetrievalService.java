@@ -10,6 +10,7 @@ import java.util.List;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 
 public class CourseRetrievalService {
     private static final String PS_URI = "http://127.0.0.1:8000/pluralsight/profile/data/author/%s/all-content";
@@ -19,7 +20,8 @@ public class CourseRetrievalService {
             .followRedirects(HttpClient.Redirect.ALWAYS)
             .build();
 
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper()
+                                                        .registerModule(new Jdk8Module());
 
     public List<PluralsightCourse> getCoursesFor(String authorId) {
         HttpRequest request = HttpRequest

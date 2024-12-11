@@ -22,8 +22,7 @@ public class CourseRetriever {
         }
 
         try {
-            retrieveCourses(args[0]);
-            //retrieveCourses("sander-mak");
+            retrieveCourses(args[0]); // args[0] == "sander-mak" or "jim-wilson" for example.
         } catch (Exception e) {
             LOG.error("Unexpected Error", e); // We don't need a StackTrace for this error log.
         }
